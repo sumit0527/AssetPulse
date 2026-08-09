@@ -1,26 +1,26 @@
 import mysql.connector
 from dotenv import load_dotenv
-import os
-
-# load environment variables 
-load_dotenv()
+from utils.exceptions import ConfigurationError
+from config import db_host, db_port, db_username, db_password, db_name
 
 try:
+
     # Create Database Connection
     conn = mysql.connector.connect(
-        host=os.getenv("DB_HOST"),
-        port=os.getenv("DB_PORT"),
-        username=os.getenv("DB_USERNAME"),
-        password=os.getenv("DB_PASSWORD"),
-        database=os.getenv("DB_NAME"),
+        host=db_host,
+        port=db_port,
+        username=db_username,
+        password=db_password,
+        database=db_name,
     )
 
     # Test Connection
     if conn.is_connected():
         print("Database Connected Successfully...")
 
-except mysql.connector.Error as err:
-    print(f"Database Connection Failed: {err}")
+
+except mysql.connector.Error as e:
+    print(f"Database Connection Failed: {e}")
 
 finally:
     # Close Connection
